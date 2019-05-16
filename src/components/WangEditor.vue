@@ -6,7 +6,7 @@
 import E from 'wangeditor'
 import { uploads } from '../utils/api.js'
 import config from '../utils/config.js'
-const { website, apisite } = config
+const { apisite } = config
 export default {
   name: 'Editor',
   data(){
@@ -27,6 +27,7 @@ export default {
   },
   methods: {
     initEditor () {
+        let _this = this
         const elem = this.$refs[this.refName]
         const editor = new E(elem)
         this.editor = editor
@@ -37,7 +38,6 @@ export default {
         editor.customConfig.customUploadImg = function (files, insert) {
             // files 是 input 中选中的文件列表
             if (files[0]) {
-                let _this = this
                 const formData = new window.FormData()
                 formData.append('file', files[0])
                 fetch(apisite + '/index/Common/uploads', {
@@ -46,12 +46,12 @@ export default {
                 }).then((res) => {
                     return res.json()
                 }).then((res) => {
-                    // const data = res.resultData
                     if (res.status) {
-                        // 上传代码返回结果之后，将图片插入到编辑器中
-                        insert(website + '/uploads/' + res.path)
-                        // _this.setState({img_id: res.id});
-                        // _this.props._setEditorContent({img_id:_this.state.img_id})
+                      let { attachment_id, saveName, savepath } = res;
+                      // 上传代码返回结果之后，将图片插入到编辑器中
+                      insert(apisite + '/uploads/' + savepath + '/' + saveName);
+                      // 将附件id传给父组件并设置值
+                      _this.$emit('editorChange', {'attachment_id': attachment_id});
                     } else {
                         console.log(res.msg)
                     }
@@ -105,7 +105,7 @@ export default {
             '创建': 'init'
         }
         editor.customConfig.onchange = html => {
-          this.$emit('editorChange', html)
+          this.$emit('editorChange', {'content': html})
         }
         editor.create()
     }

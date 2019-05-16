@@ -17,7 +17,7 @@
       <div class="login-info" v-if="checkLogin">
         <span>{{ userName }}</span><img src="../assets/images/user.jpg" alt=""/>
         <ul class="sub-menu">
-            <li><a href="/createArticle">发布文章</a></li>
+            <li v-if="userType"><a href="/createArticle">发布文章</a></li>
             <li><a>个人信息</a></li>
             <li><a>我的收藏</a></li>
             <li><a v-on:click="_logout">退出</a></li>
@@ -46,7 +46,8 @@ export default {
       navList: [],
       showLogin: false,
       showRegister: false,
-      checkLogin: false,
+			checkLogin: false,
+			userType: 0,
       userName: '透心凉℃'
     }
 	},
@@ -62,14 +63,23 @@ export default {
 		})
 		checkLogin()
 		.then(res => {
-			this.checkLogin = res
+			if(res) {
+				let { status } = res;
+				let { name, user_type } = res.user;
+				this.checkLogin = status;
+				this.userName = name;
+				this.userType = user_type;
+			}
 		}, err => {
 			console.log(err)
 		})
 	},
 	methods: {
-		_login(checkLogin){
-			this.checkLogin = checkLogin
+		_login(res){
+			let { status, name, user_type } = res;
+			this.checkLogin = status;
+			this.userName = name;
+			this.userType = user_type;
 		},
 		_logout(){
 			logout()

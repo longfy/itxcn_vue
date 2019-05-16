@@ -104,7 +104,7 @@ export default {
                 message: res.msg,
                 type: 'success'
               });
-              this.$emit('login', res.status)
+              this.$emit('login', res)
               this.$emit('update:showLogin', false)
             } else {
               this.$message.error(res.msg);

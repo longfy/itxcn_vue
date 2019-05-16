@@ -40,7 +40,8 @@ export default {
     return {
       form: {
         title: '',
-        content: ''
+        content: '',
+        attachment_id: []
       },
       rules:{
         title: [{ required: true, message: '文章标题不能为空！', trigger: 'blur' }],
@@ -52,16 +53,23 @@ export default {
     Editor
   },
   methods: {
-    _setContent(editorContent){
-      this.form.content = editorContent
+    _setContent(params){
+      for (let [key, val] of Object.entries(params)) {
+        if(key == 'attachment_id') {
+          this.form[key].push(val);
+        } else {
+          this.form[key] = val;
+        }
+      }
     },
     _submit(formName){
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          let { title, content, attachment_id } = this.form;
           addArticle({
-            title: this.form.title,
-            content: this.form.content,
-            img_id: 1
+            title: title,
+            content: content,
+            img_id: attachment_id.join(',')
           })
           .then(res => {
             if (res.status) {
