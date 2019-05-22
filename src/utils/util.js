@@ -72,6 +72,18 @@ export default class util {
       }
       return _newPar;
   }
+  //递归实现对象的深拷贝，深复制
+  deepcopy(obj){
+    var newobj = {};
+    for(key in obj){
+        if (typeof obj[key]==='object' && obj[key] !== null) {
+            newobj[key] = deepcopy(obj[key]); //递归，核心代码
+        } else {
+            newobj[key] = obj[key];
+        }
+    }
+    return newobj;
+ }
   //检验字符串超出显示省略号
   CutParagraph(name, size) {
       var newName;
