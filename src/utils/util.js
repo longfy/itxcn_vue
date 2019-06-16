@@ -1,9 +1,9 @@
-export default class util {
+export default class Util {
   constructor() {
 
   }
   //数组中删除一个元素
-  removeItem(arr, item) {
+  removeItem = (arr, item) => {
       var index = arr.indexOf(item);
       if (index > -1) {
         arr.splice(index, 1);
@@ -11,7 +11,7 @@ export default class util {
       return arr;
   }
   //数组对象去重
-  dedupe(Arr) {
+  dedupe = Arr => {
       let hash = {};
       let allArr = Arr.reduce(function(item, next) {
         hash[next.numbers] ? "" : (hash[next.numbers] = true && item.push(next));
@@ -20,7 +20,7 @@ export default class util {
       return allArr;
   }
   //数组去重
-  removeRepeatArray(arr) {
+  removeRepeatArray = arr => {
       return arr.filter(function (item, index, self) {
         return self.indexOf(item) === index;
       });
@@ -28,38 +28,56 @@ export default class util {
       //return Array.from(new Set(arr))
   }
   //数组最小值
-  minArr(arr) {
-      return Math.min.apply(null, arr);
+  minArr = arr => {
+      return Math.min(...arr);
   }
   //数组最大值
-  maxArr(arr) {
-      return Math.max.apply(null, arr);
+  maxArr = arr => {
+      return Math.max(...arr);
   }
   //数字或数组求和
-  sum (...arr) {
+  sum = arr => {
       return [...arr].reduce((acc, val) => acc + val, 0);
   }
   //求数字或数组的平均值
-  average (...nums) {
-      return [...nums].reduce((acc, val) => acc + val, 0);
+  average = (...arr) => {
+    const nums = [].concat(...arr);
+    return nums.reduce((acc, val) => acc + val, 0) / nums.length;
+  }
+  //判断一个元素是否在一个数组中
+  contains = (arr, val) => {
+      return arr.indexOf(val) != -1 ? true : false;
   }
   //数组顺序打乱
-  upsetArr(arr) {
+  upsetArr = arr => {
       return arr.sort(function () {
         return Math.random() - 0.5
       });
   }
-  //判断一个元素是否在一个数组中
-  contains(arr, val) {
-      return arr.indexOf(val) != -1 ? true : false;
+  // 数组排序(js自带函数sort)
+  sort = (arr, type = 0) => { // type：0倒序，1顺序
+    return arr.sort((a, b) => {
+      return type ?  b - a : a - b;
+    })
+  }
+  // 数组排序(冒泡排序)
+  bubbleSort = (arr, type) => { // type：0倒序，1顺序
+    for(let i = 0; i < arr.length; i ++) {
+      for(let j = 0; j < arr.length; j++) {
+        if(type ? arr[i] > arr[j] : arr[i] < arr[j]) {
+          [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+      }
+    }
+    return arr;
   }
   //判断对象是否为空
-  isEmptyObject(obj) {
+  isEmptyObject = obj => {
       if (!obj || typeof obj !== "object" || Array.isArray(obj)) return false;
       return !Object.keys(obj).length;
   }
   //清除对象中值为空的属性
-  filterParams(obj) {
+  filterParams = obj => {
       let _newPar = {};
       for (let key in obj) {
         if (
@@ -73,10 +91,10 @@ export default class util {
       return _newPar;
   }
   //递归实现对象的深拷贝，深复制
-  deepcopy(obj){
+  deepcopy = obj => {
     var newobj = {};
-    for(key in obj){
-        if (typeof obj[key]==='object' && obj[key] !== null) {
+    for(let key in obj){
+        if (typeof obj[key] === 'object' && obj[key] !== null) {
             newobj[key] = deepcopy(obj[key]); //递归，核心代码
         } else {
             newobj[key] = obj[key];
@@ -85,17 +103,17 @@ export default class util {
     return newobj;
  }
   //检验字符串超出显示省略号
-  CutParagraph(name, size) {
-      var newName;
-      if (name.length > size) {
-        newName = name.substring(0, size) + "...";
-        return newName;
+  CutParagraph(str, size) {
+      var newStr;
+      if (str.length > size) {
+        newStr = str.substring(0, size) + "...";
+        return newStr;
       } else {
-        return name;
+        return str;
       }
   }
   //去除字符串空格 type 1-所有空格  2-前后空格  3-前空格 4-后空格
-  trim(str, type) {
+  trim = (str, type) => {
       switch (type) {
         case 1:
           return str.replace(/\s+/g, "");
@@ -110,23 +128,23 @@ export default class util {
       }
   }
   //使用 *遮蔽字符串，默认最后4位放开
-  mask (cc, num = 4, mask = "*") {
-      return ("" + cc).slice(0, -num).replace(/./g, mask) + ("" + cc).slice(-num);
+  maskStr = (str, num = 4, mask = "*") => {
+      return ("" + str).slice(0, -num).replace(/./g, mask) + ("" + str).slice(-num);
   }
   //&#x 转汉字
-  toChinese(str) {
+  toChinese = str => {
       return unescape(str.replace(/&#x/g, "%u").replace(/;/g, ""));
   }
   //去除字符串中的汉字
-  removeCN(str) {
+  removeCN = str => {
       return str.replace(/[\u4e00-\u9fa5]/g, "");
   }
   //大写每个单词的首字母
-  capitalizeEveryWord (str) {
+  capitalizeEveryWord = str => {
       return str.replace(/\b[a-z]/g, char => char.toUpperCase());
   }
   //金额大写转换
-  digitUppercase(n) {
+  digitUppercase = n => {
       var fraction = ["角", "分"];
       var digit = ["零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"];
       var unit = [["元", "万", "亿"], ["", "拾", "佰", "仟"]];
@@ -157,19 +175,19 @@ export default class util {
       );
   }
   //转义html标签
-  htmlEncode(text) {
+  htmlEncode = text => {
       return text.replace(/&/g, '&').replace(/\"/g, '"').replace(/</g, '<').replace(/>/g, '>');
   }
   //还原html标签
-  htmlDecode(text) {
+  htmlDecode = text => {
       return text.replace(/&/g, '&').replace(/"/g, '\"').replace(/</g, '<').replace(/>/g, '>');
   }  
   //获取 url 参数
-  getURLParameters(url){
+  getURLParameters = url =>{
       return url.match(/([^?=&]+)(=([^&]*))/g).reduce((a, v) => ((a[v.slice(0, v.indexOf("="))] = v.slice(v.indexOf("=") + 1)), a),{});
   }
   //设置 url 参数
-  setUrlPrmt(obj) {
+  setUrlPrmt = obj => {
       var _rs = [];
       for (var p in obj) {
         if (obj[p] != null && obj[p] != "") {
@@ -179,7 +197,7 @@ export default class util {
       return _rs.join("&");
   }
   //检测密码强度
-  checkPwd(str) {
+  checkPwd = str => {
       var nowLv = 0;
       if (str.length < 6) {
         return nowLv;
@@ -199,7 +217,7 @@ export default class util {
       return nowLv;
   }
   //正则验证字符串
-  checkType(str, type) {
+  checkType = (str, type) => {
       switch (type) {
         case "email": //邮箱
           return /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/.test(str);
@@ -230,13 +248,13 @@ export default class util {
       }
   }
   //获取十六进制随机颜色
-  getRandomColor() {
+  getRandomColor = () => {
       return '#' + (function(h) {
           return new Array(7 - h.length).join("0") + h;
       })((Math.random() * 0x1000000 << 0).toString(16));
   }
   //生成随机颜色
-  randomColor(_client) {
+  randomColor = () => {
       return (
         "#" +
         Math.random()
@@ -246,17 +264,11 @@ export default class util {
       );
   }
   //随机数生成
-  randomNumber(n1, n2) {
-      if (arguments.length === 2) {
-        return Math.round(n1 + Math.random() * (n2 - n1));
-      } else if (arguments.length === 1) {
-        return Math.round(Math.random() * n1);
-      } else {
-        return Math.round(Math.random() * 255);
-      }
+  randomNumber (n1, n2) {
+    return Math.round(n1 + Math.random() * (n2 - n1));
   }      
   //判断数据类型
-  typeOf(obj) {
+  typeOf = obj => {
       const toString = Object.prototype.toString;
       const map = {
           '[object Boolean]'  : 'boolean',
@@ -273,7 +285,7 @@ export default class util {
       return map[toString.call(obj)];
   }
   //数据类型判断
-  istype(o, type) {
+  istype = (o, type) => {
       if (type) {
         var _type = type.toLowerCase();
       }
@@ -303,7 +315,7 @@ export default class util {
       }
   }
   //刷新当前页面
-  refreash() {
+  refreash = () => {
       window.location.href = window.location.href;
   }
   //复制到剪贴板
@@ -327,7 +339,7 @@ export default class util {
       }
   }
   //根据keycode获得键名
-  getKeyName(keycode) {
+  getKeyName = keycode => {
       let keyCodeMap = {
           8: "Backspace",9: "Tab",13: "Enter",16: "Shift",17: "Ctrl",18: "Alt",19: "Pause",20: "Caps Lock",27: "Escape",32: "Space",33: "Page Up",34: "Page Down",35: "End",36: "Home",37: "Left",38: "Up",39: "Right",40: "Down",42: "Print Screen",45: "Insert",46: "Delete",48: "0",49: "1",50: "2",51: "3",52: "4",53: "5",54: "6",55: "7",56: "8",57: "9",65: "A",66: "B",67: "C",68: "D",69: "E",70: "F",71: "G",72: "H",73: "I",74: "J",75: "K",76: "L",77: "M",78: "N",79: "O",80: "P",81: "Q",82: "R",83: "S",84: "T",85: "U",86: "V",87: "W",88: "X",89: "Y",90: "Z",91: "Windows",93: "Right Click",96: "Numpad 0",97: "Numpad 1",98: "Numpad 2",99: "Numpad 3",100: "Numpad 4",101: "Numpad 5",102: "Numpad 6",103: "Numpad 7",104: "Numpad 8",105: "Numpad 9",106: "Numpad *",107: "Numpad +",109: "Numpad -",110: "Numpad .",111: "Numpad /",112: "F1",113: "F2",114: "F3",115: "F4",116: "F5",117: "F6",118: "F7",119: "F8",120: "F9",121: "F10",122: "F11",123: "F12",144: "Num Lock",145: "Scroll Lock",182: "My Computer",183: "My Calculator",186: ";",187: "=",188: ",",189: "-",190: ".",191: "/",192: "`",219: "[",220: "\\",221: "]",222: "'"
       };
@@ -339,7 +351,7 @@ export default class util {
       }
   }
   //时间戳转换为时分秒
-  timetrans(date) {
+  timetrans = date => {
       var date = new Date(date * 1000); //如果date为13位不需要乘1000
       var Y = date.getFullYear() + "-";
       var M = (date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1) + "-";
@@ -350,7 +362,7 @@ export default class util {
       return Y + M + D + h + m + s;
   }
   //倒计时
-  getEndTime(endTime) {
+  getEndTime = endTime => {
       var startDate = new Date(); //开始时间，当前时间
       var endDate = new Date(endTime); //结束时间，需传入时间参数
       var t = endDate.getTime() - startDate.getTime(); //时间差的毫秒数
@@ -367,7 +379,7 @@ export default class util {
       return "剩余时间" + d + "天 " + h + "小时 " + m + " 分钟" + s + " 秒";
   }
   //距现在的已过时间
-  formatPassTime(startTime) {
+  formatPassTime = startTime => {
       var currentTime = Date.parse(new Date()),
         time = currentTime - startTime,
         day = parseInt(time / (1000 * 60 * 60 * 24)),
@@ -383,7 +395,7 @@ export default class util {
       else return "刚刚";
   }
   //距现在的剩余时间
-  formatRemainTime(endTime) {
+  formatRemainTime = endTime => {
       var startDate = new Date(); //开始时间
       var endDate = new Date(endTime); //结束时间
       var t = endDate.getTime() - startDate.getTime(); //时间差
@@ -400,14 +412,14 @@ export default class util {
       return d + "天 " + h + "小时 " + m + "分钟 " + s + "秒";
   }
   // 设置cookie
-  setCookie(name, value, days = 30) {
+  setCookie = (name, value, days = 30) => {
       let exp = new Date();
       exp.setTime(exp.getTime() + days * 24 * 60 * 60 * 1000);
       document.cookie = name + "=" + escape(value) + ";path=/;expires=" + exp.toGMTString();
   }
   
   // 获取cookie
-  getCookie(name) {
+  getCookie = name => {
       let arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
       if (arr != null) {
       return arr[2];
@@ -417,7 +429,7 @@ export default class util {
   }
   
   // 删除cookie
-  delCookie(name) {
+  delCookie = name => {
       let exp = new Date();
       exp.setTime(exp.getTime() - 1);
       let cval = getCookie(name);
@@ -426,13 +438,13 @@ export default class util {
       }
   }
   //设置sessionStorage
-  setSessionStorage(key, value) {
+  setSessionStorage = (key, value) => {
       if (window.sessionStorage) {
       window.sessionStorage.setItem(key, window.JSON.stringify(value));
       }
   }
   //获取sessionStorage
-  getSessionStorage(key) {
+  getSessionStorage = key => {
       var json = "";
       if (window.sessionStorage) {
       json = window.sessionStorage.getItem(key);
@@ -440,13 +452,13 @@ export default class util {
       return window.JSON.parse(json);
   }
   //设置localStorage
-  setLocalStorage(key, value) {
+  setLocalStorage = (key, value) => {
       if (window.localStorage) {
       window.localStorage.setItem(key, window.JSON.stringify(value));
       }
   }
   //获取localStorage
-  getLocalStorage(key) {
+  getLocalStorage = key => {
       var json = "";
       if (window.localStorage) {
       json = window.localStorage.getItem(key);
@@ -454,7 +466,7 @@ export default class util {
       return window.JSON.parse(json);
   }
   //判断浏览器是否支持 webP 格式图片
-  isSupportWebP() {
+  isSupportWebP = () => {
       return (
         !![].map &&
         document
@@ -463,17 +475,17 @@ export default class util {
           .indexOf("data:image/webp") == 0
       );
   }
-  isWeixin() {
+  isWeixin = () => {
       //判断是否是微信
       var ua = navigator.userAgent.toLowerCase();
       return ua.match(/MicroMessenger/i) == "micromessenger";
   }
   //检测设备类型
-  detectDeviceType() {
+  detectDeviceType = () => {
       return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test( navigator.userAgent ) ? "手机" : "电脑";
   }
   //手机类型判断
-  browserInfo(type) {
+  browserInfo = type => {
       switch (type) {
         case "android":
           return navigator.userAgent.toLowerCase().indexOf("android") !== -1;
@@ -488,7 +500,7 @@ export default class util {
       }
   }
   //获取浏览器类型和版本
-  getExplore() {
+  getExplore = () => {
       var sys = {},
         ua = navigator.userAgent.toLowerCase(),
         s;
@@ -517,7 +529,7 @@ export default class util {
       return "Unkonwn";
   }
   //获取操作系统类型
-  getOS() {
+  getOS = () => {
       var userAgent =
         ("navigator" in window &&
           "userAgent" in navigator &&
@@ -547,14 +559,14 @@ export default class util {
         return "windowsPhone";
   }
   //获取滚动条距顶部的距离
-  getScrollTop() {
+  getScrollTop = () => {
       return (
         (document.documentElement && document.documentElement.scrollTop) ||
         document.body.scrollTop
       );
   }
   //元素的距离顶部的位置
-  offset(ele) {
+  offset = ele => {
       var pos = {
         left: 0,
         top: 0
@@ -567,36 +579,36 @@ export default class util {
       return pos;
   }
   //平滑滚动
-  scrollTo(to, duration) {
+  scrollTo = (to, duration) => {
       if (duration < 0) {
-        setScrollTop(to);
+        this.setScrollTop(to);
         return;
       }
-      var diff = to - getScrollTop();
+      var diff = to - this.getScrollTop();
       if (diff === 0) return;
       var step = (diff / duration) * 10;
       requestAnimationFrame(function() {
         if (Math.abs(step) > Math.abs(diff)) {
-          setScrollTop(getScrollTop() + diff);
+          this.setScrollTop(this.getScrollTop() + diff);
           return;
         }
-        setScrollTop(getScrollTop() + step);
+        this.setScrollTop(this.getScrollTop() + step);
         if (
-          (diff > 0 && getScrollTop() >= to) ||
-          (diff < 0 && getScrollTop() <= to)
+          (diff > 0 && this.getScrollTop() >= to) ||
+          (diff < 0 && this.getScrollTop() <= to)
         ) {
           return;
         }
-        scrollTo(to, duration - 16);
+        this.scrollTo(to, duration - 16);
       });
   }
   //设置滚动条距顶部的距离
-  setScrollTop(value) {
+  setScrollTop = value => {
       window.scrollTo(0, value);
       return value;
   }
   //回到页面顶部
-  backTop() {
+  backTop = () => {
       const sTop = document.documentElement.scrollTop || document.body.scrollTop;
       const duration = 1000;//动画时间
       scrollTop(window, sTop, 0, duration);
@@ -635,7 +647,7 @@ export default class util {
       }
   }
   //适配 rem
-  getFontSize(_client) {
+  getFontSize = _client => {
       var doc = document,
       win = window;
       var docEl = doc.documentElement,
