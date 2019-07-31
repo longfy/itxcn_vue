@@ -1,11 +1,15 @@
 import Vue from 'vue'
+import './plugins/axios'
 import App from './App.vue'
-import router from './router'
-import store from './store'
-import './registerServiceWorker'
+import router from '@/router'
+import store from '@/store'
+import util from '@/utils'
 import './plugins/element.js'
+import '@/styles/index.less'
 
 Vue.config.productionTip = false
+
+Vue.prototype.util = util
 
 new Vue({
   router,

@@ -1,6 +1,6 @@
 module.exports = {
-    baseUrl: '/', //根路径
-    outputDir:'dist', //构建输出目录
+    publicPath: './', //根路径
+    outputDir: 'dist', //构建输出目录
     assetsDir: 'assets', //静态资源目录(css,js,imgage,font)
     lintOnSave: false, //是否开启es lint保存检测
     devServer: {
@@ -8,7 +8,7 @@ module.exports = {
         host: 'localhost',
         port: 8080, //端口号
         https: false,
-        hotOnly: false, //热更新(webpack已经配的有)
+        // hotOnly: false, //热更新(webpack已经配的有)
         // proxy: {
         //     //配置跨域
         //     'api': {
