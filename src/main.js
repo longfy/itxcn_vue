@@ -4,6 +4,7 @@ import App from './App.vue'
 import router from '@/router'
 import store from '@/store'
 import util from '@/utils'
+import '@/router/permission'
 import './plugins/element.js'
 import '@/styles/index.less'
 

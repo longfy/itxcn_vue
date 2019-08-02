@@ -74,16 +74,20 @@ export default {
     getNavMenu().then(res => (this.navList = res));
   },
   mounted() {
-    console.log(this.util.getCookie("userInfo"));
+    console.log(this.userInfo);
   },
   methods: {
     _login(res) {
       let { status, name, user_type } = res;
-      this.util.setCookie("userInfo", {
-        isLogin: status,
-        name,
-        userType: user_type
-      });
+      this.util.setStore(
+        "userInfo",
+        {
+          isLogin: status,
+          name,
+          userType: user_type
+        },
+        "user/changeUserState"
+      );
     },
     _logout() {
       logout().then(
