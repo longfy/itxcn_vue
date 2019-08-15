@@ -16,8 +16,8 @@ if (process.env.NODE_ENV == 'development') {
 // axios.defaults.baseURL = apisite //访问的api前缀
 // axios.defaults.timeout = 10000; //请求超时时间
 // axios.defaults.withCredentials = true; //每次请求携带cookie
-// axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
-// axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 export function get(url, params) {
   return new Promise((resolve, reject) => {
