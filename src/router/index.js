@@ -27,6 +27,14 @@ const baseRoute = [{
 }];
 
 const asyncRoute = [{
+  path: '/createArticle',
+  name: 'article',
+  components: {
+    default: () => import('@/components/Article'),
+    header: Header,
+    footer: Footer
+  }
+},{
   path: '*',
   name: 'page404',
   components: {

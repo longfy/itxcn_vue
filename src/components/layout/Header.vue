@@ -19,7 +19,7 @@
         <img src="@/assets/images/user.jpg" alt />
         <ul class="sub-menu">
           <li v-if="userInfo.userType">
-            <a href="/createArticle">发布文章</a>
+            <router-link to="/createArticle">发布文章</router-link>
           </li>
           <li>
             <a>个人信息</a>

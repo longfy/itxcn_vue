@@ -26,7 +26,7 @@
 
 <script>
 import Editor from "./WangEditor";
-import { addArticle } from "../utils/api.js";
+import { addArticle } from "@/api";
 export default {
   name: "createArticle",
   data() {

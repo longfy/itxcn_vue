@@ -4,9 +4,8 @@
 
 <script>
 import E from "wangeditor";
-import { uploads } from "../utils/api.js";
-import config from "../utils/config.js";
-const { apisite } = config;
+import { uploadFile } from "@/api";
+import config from '@/config'
 export default {
   name: "Editor",
   data() {
@@ -30,32 +29,21 @@ export default {
       const editor = new E(elem);
       this.editor = editor;
       editor.customConfig.zIndex = 100;
-      editor.customConfig.uploadImgServer = apisite + "/index/Common/uploads";
+      // editor.customConfig.uploadImgServer = config.apisite + "/index/Common/uploads";
       // 限制一次最多上传 1 张图片
       editor.customConfig.uploadImgMaxLength = 1;
       editor.customConfig.customUploadImg = function(files, insert) {
         // files 是 input 中选中的文件列表
         if (files[0]) {
-          const formData = new window.FormData();
-          formData.append("file", files[0]);
-          fetch(apisite + "/index/Common/uploads", {
-            method: "POST",
-            body: formData
+          uploadFile(files[0]).then(res => {
+            if (res.status) {
+              let { attachment_id, saveName, savepath } = res;
+              // 上传代码返回结果之后，将图片插入到编辑器中
+              insert(config.apisite + "/uploads/" + savepath + "/" + saveName);
+              // 将附件id传给父组件并设置值
+              _this.$emit("editorChange", { attachment_id: attachment_id });
+            }
           })
-            .then(res => {
-              return res.json();
-            })
-            .then(res => {
-              if (res.status) {
-                let { attachment_id, saveName, savepath } = res;
-                // 上传代码返回结果之后，将图片插入到编辑器中
-                insert(apisite + "/uploads/" + savepath + "/" + saveName);
-                // 将附件id传给父组件并设置值
-                _this.$emit("editorChange", { attachment_id: attachment_id });
-              } else {
-                console.log(res.msg);
-              }
-            });
         } else {
           alert("请选择要上传的图片！");
         }
