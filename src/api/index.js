@@ -1,4 +1,4 @@
-import { get, post } from './http'
+import { get, post, uploadFiles } from './http'
 
 //验证用户是否登录
 export const checkLogin = () => get('./index/Index/checkLogin')
@@ -35,6 +35,9 @@ export const deleteNavMenu = (params) => post('./index/Navs/delete', params)
 
 //上传文件
 export const uploads = (params) => post('./index/Common/uploads', params)
+
+//上传文件
+export const  uploadFile = (file) => uploadFiles('./index/Common/uploads', file)
 
 //文章列表
 export const getArticleList = () => get('./index/Article/getList')

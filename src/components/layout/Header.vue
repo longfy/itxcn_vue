@@ -70,9 +70,6 @@ export default {
   beforeMount() {
     getNavMenu().then(res => (this.navList = res));
   },
-  mounted() {
-    console.log(this.userInfo);
-  },
   methods: {
     _login(res) {
       let { status, name, user_type } = res;
