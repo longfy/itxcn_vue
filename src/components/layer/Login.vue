@@ -117,6 +117,7 @@ export default {
             } else {
               Message.error(res.msg);
             }
+            this.newVerify.refresh();
           });
         }
       });

@@ -14,11 +14,11 @@
           </dl>
         </li>
       </ul>
-      <div class="login-info" v-if="userInfo.isLogin">
+      <div class="login-info" v-if="userInfo.id">
         <span>{{ userInfo.name }}</span>
         <img src="@/assets/images/user.jpg" alt />
         <ul class="sub-menu">
-          <li v-if="userInfo.userType">
+          <li v-if="false">
             <router-link to="/createArticle">发布文章</router-link>
           </li>
           <li>
@@ -32,7 +32,7 @@
           </li>
         </ul>
       </div>
-      <div class="signup" v-if="!userInfo.isLogin">
+      <div class="signup" v-if="!userInfo.id">
         <div class="signup-btn">
           <el-button size="small" v-on:click="showLogin = true">登录</el-button>
           <el-button size="small" v-on:click="showRegister = true">注册</el-button>
@@ -72,14 +72,9 @@ export default {
   },
   methods: {
     _login(res) {
-      let { status, name, user_type } = res;
+      let { userInfo } = res;
       this.util.setStore(
-        "userInfo",
-        {
-          isLogin: status,
-          name,
-          userType: user_type
-        },
+        "userInfo", userInfo,
         "user/changeUserState"
       );
     },
