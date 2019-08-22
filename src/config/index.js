@@ -1,5 +1,5 @@
 const config = Object.freeze({
-  developmentUrl: 'http://api.itxcn.cn',
+  developmentUrl: 'http://www.demo.com',
   testUrl: 'http://api.itxcn.cn',
   productionUrl: 'http://api.itxcn.cn',
   apisite: 'http://api.itxcn.cn'
