@@ -42,8 +42,7 @@ import {
   Col,
   Input,
   Button,
-  FormItem,
-  Message
+  FormItem
 } from "element-ui";
 import { login } from "@/api";
 import verify from "@/utils/verify";
@@ -52,8 +51,7 @@ Vue.use(Dialog)
   .use(Col)
   .use(Input)
   .use(Button)
-  .use(FormItem)
-  .use(Message);
+  .use(FormItem);
 export default {
   data() {
     var verifyCode = (rule, value, callback) => {
@@ -108,14 +106,14 @@ export default {
             password: this.form.password
           }).then(res => {
             if (res.status) {
-              Message({
+              this.$message({
                 message: res.msg,
                 type: "success"
               });
               this.$emit("login", res);
               this.$emit("update:showLogin", false);
             } else {
-              Message.error(res.msg);
+              this.$message.error(res.msg);
             }
             this.newVerify.refresh();
           });

@@ -18,7 +18,7 @@
         <span>{{ userInfo.name }}</span>
         <img src="@/assets/images/user.jpg" alt />
         <ul class="sub-menu">
-          <li v-if="false">
+          <li v-if="true">
             <router-link to="/createArticle">发布文章</router-link>
           </li>
           <li>
@@ -45,13 +45,10 @@
 </template>
 
 <script>
-import Vue from "vue";
 import { mapState } from "vuex";
-import { Message } from "element-ui";
 import { getNavMenu, checkLogin, logout } from "@/api";
 import Login from "@/components/layer/Login";
 import Register from "@/components/layer/Register";
-Vue.use(Message);
 export default {
   data() {
     return {
@@ -82,7 +79,7 @@ export default {
       logout().then(
         res => {
           if (res.status) {
-            Message({
+            this.$message({
               message: res.msg,
               type: "success"
             });
