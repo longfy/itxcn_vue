@@ -2,7 +2,7 @@
   <footer class="footer">
     <div class="container">
       <div class="copyright">
-        <a href="http://www.miitbeian.gov.cn/" target="_blank">湘ICP备17000700号</a>
+        <a href="http://www.beian.miit.gov.cn/" target="_blank">湘ICP备17000700号</a>
       </div>
     </div>
   </footer>
